@@ -99,7 +99,7 @@ export default function HeroSection() {
   const IconComponent = currentSlideData.icon
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-orange-50 to-red-50">
+    <section className="relative min-h-screen h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-orange-50 to-red-50">
       {/* Animated Background */}
       <motion.div
         className="absolute inset-0 opacity-20"
@@ -143,11 +143,11 @@ export default function HeroSection() {
         className="container-custom relative z-10"
         style={{ y: y, opacity, scale }}
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[70vh]">
+        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center min-h-[70vh]">
           
           {/* Left Content */}
           <motion.div 
-            className="text-center lg:text-left order-2 lg:order-1"
+            className="text-center lg:text-left order-2 lg:order-1 lg:col-span-3"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -170,7 +170,7 @@ export default function HeroSection() {
                 </motion.div>
 
                 {/* Title */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 leading-tight">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 leading-tight">
                   <motion.span
                     className="block"
                     initial={{ opacity: 0, y: 20 }}
@@ -191,7 +191,7 @@ export default function HeroSection() {
 
                 {/* Description */}
                 <motion.p 
-                  className="text-xl lg:text-2xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+                  className="text-base lg:text-lg text-gray-600 mb-6 leading-relaxed max-w-xl mx-auto lg:mx-0"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -208,8 +208,8 @@ export default function HeroSection() {
                 >
                   <Button
                     asChild
-                    size="lg"
-                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                    size="default"
+                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Link href={currentSlideData.ctaLink} className="flex items-center space-x-2">
                       <span>{currentSlideData.ctaText}</span>
@@ -219,8 +219,8 @@ export default function HeroSection() {
                   <Button
                     asChild
                     variant="outline"
-                    size="lg"
-                    className="border-2 border-orange-300 text-orange-600 hover:bg-orange-50 font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:border-orange-400"
+                    size="default"
+                    className="border-2 border-orange-300 text-orange-600 hover:bg-orange-50 font-medium px-6 py-2.5 rounded-full transition-all duration-300 hover:border-orange-400"
                   >
                     <Link href={currentSlideData.secondaryLink} className="flex items-center space-x-2">
                       <span>{currentSlideData.secondaryText}</span>
@@ -233,12 +233,12 @@ export default function HeroSection() {
 
           {/* Right Content - Image Carousel */}
           <motion.div 
-            className="relative order-1 lg:order-2"
+            className="relative order-1 lg:order-2 lg:col-span-2"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="relative aspect-[4/3] lg:aspect-square max-w-lg mx-auto lg:max-w-none">
+            <div className="relative aspect-[4/3] lg:aspect-[4/3] max-w-md mx-auto lg:max-w-lg xl:max-w-xl">
               
               {/* Main Image Container */}
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
@@ -355,10 +355,10 @@ export default function HeroSection() {
 
       {/* Scroll Indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-16 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.8 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}

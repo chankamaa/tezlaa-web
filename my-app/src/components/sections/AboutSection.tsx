@@ -53,13 +53,13 @@ export default function AboutSection() {
       className="py-16 lg:py-24 bg-white overflow-hidden"
     >
       <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
           
           {/* Left Content */}
           <motion.div 
             ref={contentRef}
             style={{ y, opacity }}
-            className="space-y-8"
+            className="space-y-8 lg:col-span-3"
           >
             {/* Section Label */}
             <motion.div
@@ -78,7 +78,7 @@ export default function AboutSection() {
               animate={contentInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight">
                 <span className="block">Rooted in Passion,</span>
                 <span className="block mt-2">Served with Love</span>
               </h2>
@@ -90,7 +90,7 @@ export default function AboutSection() {
               animate={contentInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+              <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
                 Tezlaa Café was built on a simple belief: great coffee should do good. 
                 From working with ethical farmers to using sustainable practices, we care 
                 about every step of the journey. Each cup we serve is a celebration of 
@@ -148,7 +148,7 @@ export default function AboutSection() {
           {/* Right Image */}
           <motion.div 
             ref={imageRef}
-            className="relative order-first lg:order-last"
+            className="relative order-first lg:order-last lg:col-span-2"
             initial={{ opacity: 0, x: 100 }}
             animate={imageInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
@@ -156,7 +156,7 @@ export default function AboutSection() {
             <div className="relative">
               {/* Main Image Container */}
               <motion.div 
-                className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl"
+                className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl max-w-md mx-auto lg:max-w-lg"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
@@ -165,8 +165,13 @@ export default function AboutSection() {
                   <div className="text-center text-gray-700">
                     <Coffee className="w-16 h-16 mx-auto mb-4 text-orange-600" />
                     <p className="text-lg font-medium">
-                      {/* TODO: Replace with actual café interior image */}
-                      Café Interior Image
+                      <Image
+                  src="/images/cafes/interior-main.png"
+                  alt="Tezlaa Café Interior"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
                     </p>
                     <p className="text-sm text-gray-500 mt-2">
                       /images/cafe/interior-main.jpg
@@ -176,7 +181,7 @@ export default function AboutSection() {
                 {/* 
                 Uncomment when you have the actual image:
                 <Image
-                  src="/images/cafe/interior-main.jpg"
+                  src="/images/cafe/interior-main.png"
                   alt="Tezlaa Café Interior"
                   fill
                   className="object-cover"

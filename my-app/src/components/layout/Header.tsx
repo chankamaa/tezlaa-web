@@ -65,7 +65,7 @@ export default function Header() {
       data-scroll-target="#scroll-container"
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <Link 
             href="/" 
@@ -74,7 +74,7 @@ export default function Header() {
             data-scroll-speed="0.5"
           >
             {/* Replace this div with your logo PNG */}
-            <div className="w-auto h-12 md:h-14 lg:h-16 relative min-w-[140px] max-w-[280px] overflow-hidden">
+            <div className="w-auto h-8 md:h-10 lg:h-12 relative min-w-[100px] max-w-[200px]">
               
               <Image
                 src="/images/logo/tezlaa-logo.png"
@@ -87,8 +87,8 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList className="space-x-2">
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList className="flex items-center space-x-1">
               {navigation.map((item) => (
                 <NavigationMenuItem key={item.name}>
                   <Link href={item.href} legacyBehavior passHref>
@@ -96,7 +96,7 @@ export default function Header() {
                       className={cn(
                         navigationMenuTriggerStyle(),
                         'bg-transparent hover:bg-orange-50 hover:text-orange-600 transition-colors',
-                        'font-medium text-gray-700',
+                        'font-medium text-gray-700 text-sm px-3 py-2',
                         isActiveLink(item.href) && 'text-orange-600 bg-orange-50'
                       )}
                     >
@@ -109,10 +109,10 @@ export default function Header() {
           </NavigationMenu>
 
           {/* Desktop CTA Button */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             <Button
               asChild
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium text-sm px-4 py-1.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
               <Link href="/locations" className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
