@@ -137,7 +137,7 @@ export default function OccasionsSection() {
                 <div className="relative h-[500px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl bg-white">
                   {/* Background Image/Gradient */}
                   <div className="absolute inset-0">
-                    {/* Placeholder gradient background */}
+                    {/* Placeholder gradient background - replace from this  */}
                     <div className={`w-full h-full bg-gradient-to-br ${occasion.gradient} opacity-90`}>
                       <div className="absolute inset-0 bg-black/40" />
                     </div>

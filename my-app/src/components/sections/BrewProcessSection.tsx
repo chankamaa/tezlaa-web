@@ -7,21 +7,21 @@ import Image from 'next/image'
 const brewSteps = [
   {
     id: 1,
-    iconPath: "/icons/beans-icon.png", // Replace with your icon path
+    iconPath: "/images/icons/beans-icon.png", // Replace with your icon path
     title: "Finest Beans Selected",
     description: "We source ethically grown, high-quality beans from trusted farmers who share our passion for coffee.",
     gradient: "from-amber-400 to-orange-500"
   },
   {
     id: 2,
-    iconPath: "/icons/roasted-icon.png", // Replace with your icon path
+    iconPath: "/images/icons/roasted-icon.png", // Replace with your icon path
     title: "Perfectly Roasted",
     description: "Our beans are roasted in-house in small batches, locking in aroma and flavor for a truly rich experience.",
     gradient: "from-orange-400 to-red-500"
   },
   {
     id: 3,
-    iconPath: "/icons/handcrafted-icon.png", // Replace with your icon path
+    iconPath: "/images/icons/handcrafted-icon.png", // Replace with your icon path
     title: "Handcrafted with Love",
     description: "Each cup is carefully brewed and served fresh, balancing taste, aroma, and that perfect café warmth.",
     gradient: "from-red-400 to-pink-500"
