@@ -147,7 +147,7 @@ export default function BrewProcessSection() {
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight"
+            className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={titleInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -203,7 +203,7 @@ export default function BrewProcessSection() {
 
               {/* Description */}
               <motion.p 
-                className="text-gray-600 leading-relaxed max-w-sm mx-auto"
+                className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-sm mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={stepsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.5 + index * 0.1 }}
