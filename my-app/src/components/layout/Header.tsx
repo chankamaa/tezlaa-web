@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -19,7 +20,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
-import { Menu, X, MapPin } from 'lucide-react'
+import { Menu, X, MapPin, Phone, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
@@ -34,9 +35,12 @@ const navigation = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
+    setIsLoaded(true)
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
@@ -53,157 +57,304 @@ export default function Header() {
   }
 
   return (
-    <header
+    <motion.header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
+          ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50'
           : 'bg-transparent'
       )}
+      initial={{ y: -100 }}
+      animate={{ y: isLoaded ? 0 : -100 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       data-scroll
       data-scroll-sticky
       data-scroll-target="#scroll-container"
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 lg:h-16">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-4">
+        <div className="flex items-center justify-between h-16 lg:h-18 xl:h-20">
           {/* Logo */}
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 group flex-shrink-0"
-            data-scroll
-            data-scroll-speed="0.5"
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Replace this div with your logo PNG */}
-            <div className="w-auto h-8 md:h-10 lg:h-12 relative min-w-[100px] max-w-[200px]">
-              
-              <Image
-                src="/images/logo/tezlaa-logo.png"
-                alt="Tezlaa Café"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </Link>
+            <Link 
+              href="/" 
+              className="flex items-center space-x-2 group flex-shrink-0"
+              data-scroll
+              data-scroll-speed="0.5"
+            >
+              <div className="w-auto h-10 md:h-12 lg:h-14 xl:h-16 relative min-w-[120px] max-w-[220px] transition-all duration-300 group-hover:scale-105">
+                <Image
+                  src="/images/logo/tezlaa-logo.png"
+                  alt="Tezlaa Café"
+                  fill
+                  className="object-contain transition-all duration-300"
+                  priority
+                />
+              </div>
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="flex items-center space-x-1">
-              {navigation.map((item) => (
-                <NavigationMenuItem key={item.name}>
-                  <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        'bg-transparent hover:bg-orange-50 hover:text-orange-600 transition-colors',
-                        'font-medium text-gray-700 text-sm px-3 py-2',
-                        isActiveLink(item.href) && 'text-orange-600 bg-orange-50'
-                      )}
+          <motion.div
+            className="hidden lg:flex"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <NavigationMenu>
+              <NavigationMenuList className="flex items-center space-x-2">
+                {navigation.map((item, index) => (
+                  <NavigationMenuItem key={item.name}>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                     >
-                      {item.name}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+                      <Link href={item.href} legacyBehavior passHref>
+                        <span
+                          className={cn(
+                            'relative bg-transparent hover:text-orange-600 transition-colors duration-300 cursor-pointer inline-block',
+                            'font-medium text-gray-700 text-sm lg:text-base px-4 py-2.5',
+                            'after:absolute after:bottom-0 after:left-0 after:w-0 after:h-1 after:bg-orange-500 after:transition-all after:duration-300 after:rounded-full',
+                            'hover:after:w-full',
+                            isActiveLink(item.href) && 'text-orange-600 after:w-full'
+                          )}
+                        >
+                          {item.name}
+                        </span>
+                      </Link>
+                    </motion.div>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </motion.div>
 
           {/* Desktop CTA Button */}
-          <div className="hidden md:flex items-center space-x-2">
-            <Button
-              asChild
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium text-sm px-4 py-1.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          <motion.div
+            className="hidden lg:flex items-center space-x-3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            {/* Contact Icons */}
+            <div className="hidden xl:flex items-center space-x-2 mr-2">
+              <motion.a
+                href="tel:+94777325356"
+                className="p-2 text-gray-600 hover:text-orange-600 transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Phone className="w-4 h-4" />
+              </motion.a>
+              <motion.a
+                href="mailto:info@tezlaa.com"
+                className="p-2 text-gray-600 hover:text-orange-600 transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Mail className="w-4 h-4" />
+              </motion.a>
+            </div>
+
+            {/* Main CTA Button */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Link href="/locations" className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4" />
-                <span>Visit Tezlaa</span>
-              </Link>
-            </Button>
-          </div>
+              <Button
+                asChild
+                className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 hover:from-orange-600 hover:via-red-500 hover:to-red-600 text-white font-semibold text-sm lg:text-base px-6 py-2.5 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+              >
+                <Link href="/locations" className="flex items-center space-x-2 relative z-10">
+                  <MapPin className="w-4 h-4 lg:w-5 lg:h-5" />
+                  <span>Visit Tezlaa</span>
+                  
+                  {/* Animated background */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* Mobile Menu Trigger */}
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-700 hover:text-orange-600 hover:bg-orange-50"
-              >
-                <Menu className="w-6 h-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-
-            <SheetContent 
-              side="right" 
-              className="w-full sm:w-80 bg-white border-l border-gray-100"
-            >
-              <SheetHeader className="border-b border-gray-100 pb-4 mb-6">
-                <SheetTitle className="flex items-center justify-between">
-                  {/* Mobile Logo */}
-                  <div className="w-28 h-7 relative">
-                    {/* TODO: Replace with your logo PNG */}
-                    <div className="w-full h-full bg-gradient-to-r from-orange-500 to-red-500 rounded flex items-center justify-center">
-                      <span className="text-white font-bold text-sm font-display">
-                        TEZLAA
-                      </span>
-                    </div>
-                  </div>
+          <motion.div
+            className="lg:hidden"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="relative p-2 text-gray-700 hover:text-orange-600 transition-all duration-300 group"
                   >
-                    <X className="w-5 h-5" />
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={isMobileMenuOpen ? 'close' : 'menu'}
+                        initial={{ rotate: -90, opacity: 0 }}
+                        animate={{ rotate: 0, opacity: 1 }}
+                        exit={{ rotate: 90, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {isMobileMenuOpen ? (
+                          <X className="w-6 h-6" />
+                        ) : (
+                          <Menu className="w-6 h-6" />
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+                    <span className="sr-only">
+                      {isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                    </span>
                   </Button>
-                </SheetTitle>
-              </SheetHeader>
+                </motion.div>
+              </SheetTrigger>
 
-              {/* Mobile Navigation */}
-              <nav className="space-y-2">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      'block px-4 py-3 rounded-lg font-medium transition-colors',
-                      'hover:bg-orange-50 hover:text-orange-600',
-                      isActiveLink(item.href)
-                        ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500'
-                        : 'text-gray-700'
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
+            <SheetContent 
+              side="right" 
+              className="w-full sm:w-96 bg-white/95 backdrop-blur-xl border-l border-gray-200/50 shadow-2xl"
+            >
+              <motion.div
+                initial={{ x: 300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 300, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="h-full flex flex-col"
+              >
+                <SheetHeader className="border-b border-gray-200/50 pb-6 mb-8">
+                  <SheetTitle className="flex items-center justify-between">
+                    {/* Mobile Logo */}
+                    <motion.div 
+                      className="w-32 h-8 relative"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
+                      <Image
+                        src="/images/logo/tezlaa-logo.png"
+                        alt="Tezlaa Café"
+                        fill
+                        className="object-contain"
+                      />
+                    </motion.div>
+                  </SheetTitle>
+                </SheetHeader>
 
-              {/* Mobile CTA Button */}
-              <div className="mt-8 pt-6 border-t border-gray-100">
-                <Button
-                  asChild
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-3 rounded-lg shadow-lg"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                {/* Mobile Navigation */}
+                <nav className="flex-1 space-y-3">
+                  {navigation.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ x: 50, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={cn(
+                          'flex items-center px-6 py-4 font-medium transition-all duration-300 group relative',
+                          'hover:text-orange-600 hover:scale-105 active:scale-95',
+                          'after:absolute after:bottom-2 after:left-6 after:w-0 after:h-1 after:bg-orange-500 after:transition-all after:duration-300 after:rounded-full',
+                          'hover:after:w-2/3',
+                          isActiveLink(item.href)
+                            ? 'text-orange-600 after:w-2/3'
+                            : 'text-gray-700 hover:text-orange-600'
+                        )}
+                      >
+                        <span className="font-semibold">{item.name}</span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* Mobile CTA Button */}
+                <motion.div 
+                  className="mt-8 pt-6 border-t border-gray-200/50"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.4 }}
                 >
-                  <Link href="/locations" className="flex items-center justify-center space-x-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>Visit Tezlaa</span>
-                  </Link>
-                </Button>
-              </div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 hover:from-orange-600 hover:via-red-500 hover:to-red-600 text-white font-bold py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Link href="/locations" className="flex items-center justify-center space-x-3 relative z-10">
+                        <MapPin className="w-5 h-5" />
+                        <span className="text-lg">Visit Tezlaa</span>
+                        
+                        {/* Animated shine effect */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          initial={{ x: '-100%' }}
+                          whileHover={{ x: '100%' }}
+                          transition={{ duration: 0.6 }}
+                        />
+                      </Link>
+                    </Button>
+                  </motion.div>
+                </motion.div>
 
-              {/* Mobile Contact Info */}
-              <div className="mt-6 pt-6 border-t border-gray-100 text-center">
-                <p className="text-sm text-gray-600 mb-2">Handcrafted coffee, cozy spaces</p>
-                <p className="text-sm font-medium text-gray-800">+94 777 325 356</p>
-                <p className="text-sm text-gray-600">info@tezlaa.com</p>
-              </div>
+                {/* Mobile Contact Info */}
+                <motion.div 
+                  className="mt-8 pt-6 border-t border-gray-200/50"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.5 }}
+                >
+                  <div className="text-center space-y-4">
+                    <p className="text-sm text-gray-600 font-medium">Handcrafted coffee, cozy spaces</p>
+                    
+                    {/* Contact Links */}
+                    <div className="flex justify-center space-x-6">
+                      <motion.a
+                        href="tel:+94777325356"
+                        className="flex items-center space-x-2 text-gray-700 hover:text-orange-600 transition-colors duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Phone className="w-4 h-4" />
+                        <span className="text-sm font-medium">+94 777 325 356</span>
+                      </motion.a>
+                      
+                      <motion.a
+                        href="mailto:info@tezlaa.com"
+                        className="flex items-center space-x-2 text-gray-700 hover:text-orange-600 transition-colors duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Mail className="w-4 h-4" />
+                        <span className="text-sm font-medium">Email Us</span>
+                      </motion.a>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
             </SheetContent>
           </Sheet>
+          </motion.div>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
